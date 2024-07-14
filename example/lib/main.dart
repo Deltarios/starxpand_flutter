@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:http/http.dart' as http;
 
-import 'package:flutter/services.dart';
 import 'package:starxpand/starxpand.dart';
 
 void main() {
@@ -27,8 +26,7 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> _find() async {
-    var ps = await StarXpand.findPrinters(
-        callback: (payload) => print('printer: $payload'));
+    var ps = await StarXpand.findPrinters(callback: (payload) => print('printer: $payload'));
     setState(() {
       printers = ps;
     });
@@ -39,8 +37,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   _startInputListener(StarXpandPrinter printer) {
-    StarXpand.startInputListener(
-        printer, (p) => print('_startInputListener: ${p.inputString}'));
+    StarXpand.startInputListener(printer, (p) => print('_startInputListener: ${p.inputString}'));
   }
 
   _print(StarXpandPrinter printer) async {
@@ -54,9 +51,7 @@ class _MyAppState extends State<MyApp> {
     printDoc.actionPrintImage(response.bodyBytes, 350);
 
     printDoc.style(
-        internationalCharacter: StarXpandStyleInternationalCharacter.usa,
-        characterSpace: 0.0,
-        alignment: StarXpandStyleAlignment.center);
+        internationalCharacter: StarXpandStyleInternationalCharacter.usa, characterSpace: 0.0, alignment: StarXpandStyleAlignment.center);
     printDoc.actionPrintText("Star Clothing Boutique\n"
         "123 Star Road\n"
         "City, State 12345\n");
@@ -106,16 +101,11 @@ class _MyAppState extends State<MyApp> {
 
     printDoc.style(alignment: StarXpandStyleAlignment.center);
 
-    printDoc.actionPrintBarcode("0123456",
-        symbology: StarXpandBarcodeSymbology.jan8,
-        barDots: 3,
-        height: 5,
-        printHri: true);
+    printDoc.actionPrintBarcode("0123456", symbology: StarXpandBarcodeSymbology.jan8, barDots: 3, height: 5, printHri: true);
 
     printDoc.actionFeedLine(1);
 
-    printDoc.actionPrintQRCode("Hello, World\n",
-        level: StarXpandQRCodeLevel.l, cellSize: 8);
+    printDoc.actionPrintQRCode("Hello, World\n", level: StarXpandQRCodeLevel.l, cellSize: 8);
 
     printDoc.actionCut(StarXpandCutType.partial);
 
@@ -136,11 +126,7 @@ class _MyAppState extends State<MyApp> {
           TextButton(child: Text('FInd'), onPressed: () => _find()),
           if (printers != null)
             for (var p in printers!)
-              ListTile(
-                  onTap: () => _print(p),
-                  title: Text(p.model.label),
-                  subtitle: Text(p.identifier),
-                  trailing: Text(p.interface.name))
+              ListTile(onTap: () => _print(p), title: Text(p.model.label), subtitle: Text(p.identifier), trailing: Text(p.interface.name))
         ]),
       ),
     );
